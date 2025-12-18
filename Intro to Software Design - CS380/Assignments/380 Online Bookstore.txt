@@ -1,0 +1,28 @@
+title 380 Online Bookstore\nIsak Jacobson
+
+participant Customer
+participant Online Bookstore System
+participant Inventory System
+participant Payment Gateway
+participant Order Database
+
+Customer->Online Bookstore System:Add book to cart
+note right of Online Bookstore System:Update cart
+Customer<--Online Bookstore System:Display cart contents
+
+Customer->Online Bookstore System:Place order
+Online Bookstore System->Inventory System:Check Inventory
+alt If not available
+Online Bookstore System<--Inventory System:Unavailable
+Customer<--Online Bookstore System:Send error message
+else If available
+Online Bookstore System<--Inventory System:Available
+note left of Online Bookstore System:Calculate total price
+Customer<--Online Bookstore System:Displays total cost to the customer
+Customer->Online Bookstore System:Enter payment information
+Online Bookstore System->Payment Gateway:Process Payment
+Payment Gateway-->Online Bookstore System:Confirms Successful Payment
+Online Bookstore System->Order Database:Update Order Database
+Customer<--Online Bookstore System:Send Confirmation Email
+Customer<--Online Bookstore System:Displays Order Confirmation
+end
